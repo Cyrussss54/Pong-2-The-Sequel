@@ -1175,7 +1175,7 @@ MonoBehaviour:
   targetBall: {fileID: 148653092}
   bulletPrefab: {fileID: 2420878263059855368, guid: fa161991b0b3cf74dbf32f77cd23482c, type: 3}
   firePoint: {fileID: 1220296392}
-  fireRate: 0.75
+  fireRate: 1
 --- !u!4 &766856058
 Transform:
   m_ObjectHideFlags: 0
@@ -1229,6 +1229,8 @@ MonoBehaviour:
   Player2Goal: {fileID: 1811195463}
   Player1Text: {fileID: 1650693679}
   Player2Text: {fileID: 1885066500}
+  Player1Score: 0
+  Player2Score: 0
 --- !u!4 &977341534
 Transform:
   m_ObjectHideFlags: 0
@@ -1778,7 +1780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Paddle
   isPlayer1: 0
-  speed: 8
+  speed: 7
   rb: {fileID: 1364928627}
   startPosition: {x: 0, y: 0, z: 0}
   ball: {fileID: 148653092}
@@ -2019,7 +2021,7 @@ MonoBehaviour:
   targetBall: {fileID: 148653092}
   bulletPrefab: {fileID: 2420878263059855368, guid: fa161991b0b3cf74dbf32f77cd23482c, type: 3}
   firePoint: {fileID: 1583089665}
-  fireRate: 0.75
+  fireRate: 1
 --- !u!1 &1436549073
 GameObject:
   m_ObjectHideFlags: 0

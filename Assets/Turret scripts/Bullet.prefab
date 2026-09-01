@@ -153,6 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d500939a78dad40bc2ae0b13d32de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurretBullet
-  speed: 15
+  speed: 10
   lifetime: 3
   hitRadius: 0.8
