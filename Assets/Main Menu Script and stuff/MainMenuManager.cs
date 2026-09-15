@@ -4,23 +4,74 @@ using UnityEngine.EventSystems;
 
 public class MainMenuManager : MonoBehaviour
 {
+    private GameObject[] menuButtons;
+    private int currentSelectionIndex = 0;
+
     void Start()
     {
-        // 1. Hide the mouse cursor completely
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
 
-        // 2. Automatically highlight the Start Game button on load
-        GameObject firstButton = GameObject.Find("Start Game"); 
-        if (firstButton != null)
+        // 1. Gather all 4 buttons manually in exact vertical order
+        menuButtons = new GameObject[4];
+        menuButtons[0] = GameObject.Find("Start Game");
+        if (menuButtons[0] == null) menuButtons[0] = GameObject.Find("Start");
+        
+        menuButtons[1] = GameObject.Find("Controls");
+        if (menuButtons[1] == null) menuButtons[1] = GameObject.Find("ControlsMenu");
+
+        menuButtons[2] = GameObject.Find("Endless Mode");
+        menuButtons[3] = GameObject.Find("Quit");
+
+        // 2. Highlight the first button on load
+        HighlightSelectedButton();
+    }
+
+    void Update()
+    {
+        // 🛠️ FAILSAFE KEYBOARD INJECTION: Completely bypasses the broken Project Settings menu!
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            EventSystem.current.SetSelectedGameObject(firstButton);
+            currentSelectionIndex = (currentSelectionIndex + 1) % 4; // Move Down
+            HighlightSelectedButton();
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            currentSelectionIndex = (currentSelectionIndex - 1 + 4) % 4; // Move Up
+            HighlightSelectedButton();
+        }
+        else if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter))
+        {
+            // Trigger the correct button action on Enter release!
+            if (currentSelectionIndex == 0) ClickStartGame();
+            if (currentSelectionIndex == 1) ClickClickControls();
+            if (currentSelectionIndex == 2) ClickEndlessMode();
+            if (currentSelectionIndex == 3) QuitGame();
         }
     }
 
-    public void LoadScene(string sceneName)
+    private void HighlightSelectedButton()
     {
-        SceneManager.LoadScene(sceneName);
+        if (menuButtons != null && menuButtons[currentSelectionIndex] != null)
+        {
+            EventSystem.current.SetSelectedGameObject(menuButtons[currentSelectionIndex]);
+        }
+    }
+
+    public void ClickStartGame()
+    {
+        Scene01Events.storyStateCheckpoint = 0;
+        SceneManager.LoadScene("Pong Level 1");
+    }
+
+    public void ClickClickControls()
+    {
+        SceneManager.LoadScene("ControlsMenu");
+    }
+
+    public void ClickEndlessMode()
+    {
+        SceneManager.LoadScene("EndlessMode");
     }
 
     public void QuitGame()

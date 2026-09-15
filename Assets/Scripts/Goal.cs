@@ -10,17 +10,38 @@ public class Goal : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-            GameManager0 manager = GameObject.Find("GameManager0").GetComponent<GameManager0>();
-
-            if (!isPlayer1Goal)
+            GameManagerEndless endlessManager = Object.FindFirstObjectByType<GameManagerEndless>();
+            if (endlessManager != null)
             {
-                Debug.Log("Player 1 Scored...");
-                manager.Player1Scored();
+                if (isPlayer1Goal) 
+                {
+                    endlessManager.RegisterBallDroppedMiss();
+                }
+                return;
             }
-            else
+
+            GameManager0 managerLvl1 = Object.FindFirstObjectByType<GameManager0>();
+            if (managerLvl1 != null)
             {
-                Debug.Log("Player 2 Scored...");
-                manager.Player2Scored();
+                if (!isPlayer1Goal) managerLvl1.Player1Scored();
+                else managerLvl1.Player2Scored();
+                return;
+            }
+
+            GameManager2 managerLvl2 = Object.FindFirstObjectByType<GameManager2>();
+            if (managerLvl2 != null)
+            {
+                if (!isPlayer1Goal) managerLvl2.Player1Scored();
+                else managerLvl2.Player2Scored();
+                return;
+            }
+
+            GameManagerMini managerMini = Object.FindFirstObjectByType<GameManagerMini>();
+            if (managerMini != null)
+            {
+                if (!isPlayer1Goal) managerMini.Player1Scored();
+                else managerMini.Player2Scored();
+                return;
             }
         }
     }

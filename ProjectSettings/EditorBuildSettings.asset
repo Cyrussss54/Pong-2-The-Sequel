@@ -6,13 +6,25 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Main Menu.unity
-    guid: 8c82030503569354bb474bf87ece7d28
+    path: Assets/Scenes/Main Menu.unity
+    guid: 6db4d13891f2972499c1a2cd244e6cc0
   - enabled: 1
-    path: Assets/Pong Level 1.unity
-    guid: dfcb198ab3612d640ba55e9c7ce536a8
+    path: Assets/Scenes/ControlsMenu.unity
+    guid: e401db959a6bbf04a9c4080f85042516
   - enabled: 1
-    path: Assets/Pong Level 2.unity
-    guid: ef18e2193edf8a641b306cf1e28c8e39
+    path: Assets/Scenes/Pong Level 1.unity
+    guid: b49680826f3e30340a1543e5e5876026
+  - enabled: 1
+    path: Assets/Scenes/Pong Level 2.unity
+    guid: b891fb576b9ad3748a87afe7143063c2
+  - enabled: 1
+    path: Assets/Scenes/Pong Level 3.unity
+    guid: 178516cd46b0a3843bbe0f23efce9232
+  - enabled: 1
+    path: Assets/Scenes/Pong Mini.unity
+    guid: dc894fe2e2d6c78449360dd3102aaba0
+  - enabled: 1
+    path: Assets/Scenes/EndlessMode.unity
+    guid: 532060b808c615546a7fbdd386ee0cc2
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

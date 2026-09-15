@@ -29,7 +29,7 @@ public class GameManager0 : MonoBehaviour
         ResetPosition();
 
         // If your score method was resetting everything, switch it to scene loading!
-        if (Player1Score >= 10)
+        if (Player1Score >= 5)
         {
             Player1Score = 0;
             Player2Score = 0;
@@ -45,7 +45,7 @@ public class GameManager0 : MonoBehaviour
         ResetPosition();
 
         // If the AI scoring method was loading level 2, switch it to score resetting!
-        if (Player2Score >= 10)
+        if (Player2Score >= 5)
         {
             SceneManager.LoadScene("Pong Level 2");
         }

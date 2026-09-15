@@ -29,7 +29,7 @@ public class Ball : MonoBehaviour
             audioSource.PlayOneShot(goalSound);
         }
 
-        rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity = Vector3.zero;
         transform.position = startPosition;
         Launch();
     }
@@ -38,16 +38,24 @@ public class Ball : MonoBehaviour
     {
         float x = Random.Range(0, 2) == 0 ? -1 : 1;
         float y = Random.Range(0, 2) == 0 ? -1 : 1;
-        rb.linearVelocity = new Vector2(speed * x, speed * y);
+        rb.linearVelocity = new Vector3(speed * x, speed * y, 0);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // 1. PADDLE COLLISIONS
         if (collision.gameObject.CompareTag("Player"))
         {
             if (Time.time < paddleCooldown) return;
             paddleCooldown = Time.time + 0.1f;
+
+            if (collision.gameObject.name == "Player2" || collision.gameObject.name == "Player 2")
+            {
+                GameManagerEndless endlessManager = Object.FindFirstObjectByType<GameManagerEndless>();
+                if (endlessManager != null)
+                {
+                    endlessManager.RegisterWallBounceHit();
+                }
+            }
 
             float currentSpeed = rb.linearVelocity.magnitude;
             if (currentSpeed < speed) currentSpeed = speed;
@@ -65,8 +73,6 @@ public class Ball : MonoBehaviour
                 audioSource.PlayOneShot(paddleHitSound);
             }
         }
-
-        // 2. WALL COLLISIONS
         else if (collision.gameObject.CompareTag("Wall"))
         {
             if (Time.time < wallCooldown) return;
@@ -90,8 +96,6 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("THE SAFETY NET WAS TOUCHED BY: " + other.gameObject.name);
-
         if (other.CompareTag("Safety"))
         {
             rb.linearVelocity = Vector3.zero;
@@ -100,8 +104,6 @@ public class Ball : MonoBehaviour
         }
         else if (other.CompareTag("Bullet"))
         {
-            Debug.Log("BULLET DEFLECTED SUCCESSFULLY!");
-
             float currentSpeed = rb.linearVelocity.magnitude;
             if (currentSpeed < speed) currentSpeed = speed;
 
