@@ -4,67 +4,72 @@ using UnityEngine.EventSystems;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private GameObject[] menuButtons;
-    private int currentSelectionIndex = 0;
+    [Header("Audio Configurations")]
+    public AudioSource menuAudioSource;
+    public AudioClip moveSelectionSound;   
+    public AudioClip selectConfirmSound;  
+
+    private GameObject lastSelectedObject;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = false;
+        Cursor.visible = true; 
 
-        // 1. Gather all 4 buttons manually in exact vertical order
-        menuButtons = new GameObject[4];
-        menuButtons[0] = GameObject.Find("Start Game");
-        if (menuButtons[0] == null) menuButtons[0] = GameObject.Find("Start");
-        
-        menuButtons[1] = GameObject.Find("Controls");
-        if (menuButtons[1] == null) menuButtons[1] = GameObject.Find("ControlsMenu");
+        GameObject firstButton = GameObject.Find("Start Game");
+        if (firstButton == null) firstButton = GameObject.Find("Start");
 
-        menuButtons[2] = GameObject.Find("Endless Mode");
-        menuButtons[3] = GameObject.Find("Quit");
-
-        // 2. Highlight the first button on load
-        HighlightSelectedButton();
+        if (firstButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(firstButton);
+            lastSelectedObject = firstButton;
+        }
     }
 
     void Update()
     {
-        // 🛠️ FAILSAFE KEYBOARD INJECTION: Completely bypasses the broken Project Settings menu!
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        GameObject currentSelected = EventSystem.current.currentSelectedGameObject;
+        if (currentSelected != lastSelectedObject && currentSelected != null)
         {
-            currentSelectionIndex = (currentSelectionIndex + 1) % 4; // Move Down
-            HighlightSelectedButton();
+            if (currentSelected.GetComponent<UnityEngine.UI.Button>() != null)
+            {
+                if (menuAudioSource != null && moveSelectionSound != null)
+                {
+                    menuAudioSource.PlayOneShot(moveSelectionSound);
+                }
+            }
+            lastSelectedObject = currentSelected;
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
+
+        if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter))
         {
-            currentSelectionIndex = (currentSelectionIndex - 1 + 4) % 4; // Move Up
-            HighlightSelectedButton();
-        }
-        else if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter))
-        {
-            // Trigger the correct button action on Enter release!
-            if (currentSelectionIndex == 0) ClickStartGame();
-            if (currentSelectionIndex == 1) ClickClickControls();
-            if (currentSelectionIndex == 2) ClickEndlessMode();
-            if (currentSelectionIndex == 3) QuitGame();
+            if (menuAudioSource != null && selectConfirmSound != null)
+            {
+                menuAudioSource.PlayOneShot(selectConfirmSound);
+            }
+
+            if (currentSelected != null)
+            {
+                if (currentSelected.name == "Start Game" || currentSelected.name == "Start") 
+                    ClickStartGame();
+                else if (currentSelected.name == "Controls" || currentSelected.name == "ControlsMenu") 
+                    ClickControls();
+                else if (currentSelected.name == "Endless Mode" || currentSelected.name == "EndlessMode") 
+                    ClickEndlessMode();
+                else if (currentSelected.name == "Quit" || currentSelected.name == "Quit Game") 
+                    QuitGame();
+            }
         }
     }
 
-    private void HighlightSelectedButton()
-    {
-        if (menuButtons != null && menuButtons[currentSelectionIndex] != null)
-        {
-            EventSystem.current.SetSelectedGameObject(menuButtons[currentSelectionIndex]);
-        }
-    }
-
+    // 🎯 SCENE LOADING ACTIONS (The missing functions that make the screens switch!)
     public void ClickStartGame()
     {
         Scene01Events.storyStateCheckpoint = 0;
         SceneManager.LoadScene("Pong Level 1");
     }
 
-    public void ClickClickControls()
+    public void ClickControls()
     {
         SceneManager.LoadScene("ControlsMenu");
     }
@@ -83,3 +88,5 @@ public class MainMenuManager : MonoBehaviour
         #endif
     }
 }
+
+

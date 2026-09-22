@@ -7,7 +7,7 @@ public class GameManagerEndless : MonoBehaviour
 {
     public GameObject ball;
     public GameObject player1Paddle;
-    public TMPro.TextMeshProUGUI scoreTextDisplay; // Drag your unified high-score text layer here!
+    public TMPro.TextMeshProUGUI scoreTextDisplay; 
 
     private int currentPaddleHitsScore = 0;
 
@@ -22,25 +22,23 @@ public class GameManagerEndless : MonoBehaviour
 
     void Update()
     {
-        // Failsafe exit: Tap Escape key to return right back to the Main Menu cleanly
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("Main Menu");
         }
     }
 
-    // 🎯 WALL HIT TRIGGER HOOK: Automatically adds points every time the ball richochets off the wall!
     public void RegisterWallBounceHit()
     {
         currentPaddleHitsScore++;
         UpdateScoreboardInterface();
     }
 
-    // ❌ BALL DROP HOOK: Resets the entire run score back to 0 when you miss!
+    // ❌ FIX: Forcefully clears out the score back to 0 and instantly refreshes your UI text!
     public void RegisterBallDroppedMiss()
     {
         currentPaddleHitsScore = 0;
-        UpdateScoreboardInterface();
+        UpdateScoreboardInterface(); // This forces the screen text to immediately update to "0"
         ResetPositions();
     }
 
