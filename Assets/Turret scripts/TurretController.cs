@@ -13,7 +13,6 @@ public class TurretController : MonoBehaviour
     {
         if (targetBall == null) return;
 
-        // Tracks and rotates the turret toward the ball on the 2D plane
         Vector3 direction = targetBall.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle - 90f); 

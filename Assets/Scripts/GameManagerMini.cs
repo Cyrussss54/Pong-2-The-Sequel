@@ -103,7 +103,6 @@ public class GameManagerMini : MonoBehaviour
         
         if (Player1Score >= 3)
         {
-            // HARD ROLE REVERSAL: If this trigger hits 3, it actually means you LOST!
             playerWonMinigame = false; 
             EndMatchAndLoadLevel3();
         }
@@ -117,7 +116,6 @@ public class GameManagerMini : MonoBehaviour
         
         if (Player2Score >= 3)
         {
-            // HARD ROLE REVERSAL: If this trigger hits 3, it actually means you WON!
             playerWonMinigame = true; 
             EndMatchAndLoadLevel3();
         }

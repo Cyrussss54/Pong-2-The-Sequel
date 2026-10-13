@@ -22,10 +22,9 @@ public class GameManager2 : MonoBehaviour
     public int Player1Score;
     public int Player2Score;
 
-    // 🛠️ ROLE REVERSAL: Swapped the point triggers so scoring adds to the opposite logic layer!
     public void Player1Scored()
     {
-        Player2Score++; // Flipped
+        Player2Score++; 
         if (Player2Text != null && Player2Text.GetComponent<TMPro.TextMeshProUGUI>() != null)
         {
             Player2Text.GetComponent<TMPro.TextMeshProUGUI>().text = Player2Score.ToString();
@@ -36,7 +35,7 @@ public class GameManager2 : MonoBehaviour
 
     public void Player2Scored()
     {
-        Player1Score++; // Flipped
+        Player1Score++; 
         if (Player1Text != null && Player1Text.GetComponent<TMPro.TextMeshProUGUI>() != null)
         {
             Player1Text.GetComponent<TMPro.TextMeshProUGUI>().text = Player1Score.ToString();
@@ -47,7 +46,6 @@ public class GameManager2 : MonoBehaviour
 
     private void CheckMatchEnd()
     {
-        // 🏆 WIN CONDITION: Go to Pong Level 3 when YOUR score side hits 10!
         if (Player1Score >= 5)
         {
             Player1Score = 0;
@@ -56,7 +54,6 @@ public class GameManager2 : MonoBehaviour
             return;
         }
 
-        // ❌ LOSE CONDITION: Clear the board to 0-0 when the AI score side hits 10!
         if (Player2Score >= 5)
         {
             Player1Score = 0;

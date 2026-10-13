@@ -28,7 +28,6 @@ public class GameManager0 : MonoBehaviour
         Player1Text.GetComponent<TMPro.TextMeshProUGUI>().text = Player1Score.ToString();
         ResetPosition();
 
-        // If your score method was resetting everything, switch it to scene loading!
         if (Player1Score >= 5)
         {
             Player1Score = 0;
@@ -43,8 +42,7 @@ public class GameManager0 : MonoBehaviour
         Player2Score++;
         Player2Text.GetComponent<TMPro.TextMeshProUGUI>().text = Player2Score.ToString();
         ResetPosition();
-
-        // If the AI scoring method was loading level 2, switch it to score resetting!
+        
         if (Player2Score >= 5)
         {
             SceneManager.LoadScene("Pong Level 2");

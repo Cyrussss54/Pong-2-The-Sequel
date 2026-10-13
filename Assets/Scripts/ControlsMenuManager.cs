@@ -8,11 +8,9 @@ public class ControlsMenuManager : MonoBehaviour
 
     void Start()
     {
-        // Keep the cursor hidden but unlocked for EventSystem focus
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
 
-        // Automatically highlight the back button on scene load
         if (backToMenuButton != null)
         {
             EventSystem.current.SetSelectedGameObject(backToMenuButton);
@@ -21,7 +19,6 @@ public class ControlsMenuManager : MonoBehaviour
 
     void Update()
     {
-        // Failsafe keyboard trigger: Pressing Enter instantly loads the main menu!
         if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter))
         {
             LoadMainMenu();

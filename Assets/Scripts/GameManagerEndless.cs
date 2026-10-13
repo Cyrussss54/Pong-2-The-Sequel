@@ -34,11 +34,10 @@ public class GameManagerEndless : MonoBehaviour
         UpdateScoreboardInterface();
     }
 
-    // ❌ FIX: Forcefully clears out the score back to 0 and instantly refreshes your UI text!
     public void RegisterBallDroppedMiss()
     {
         currentPaddleHitsScore = 0;
-        UpdateScoreboardInterface(); // This forces the screen text to immediately update to "0"
+        UpdateScoreboardInterface(); 
         ResetPositions();
     }
 
